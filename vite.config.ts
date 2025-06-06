@@ -6,6 +6,6 @@ export default defineConfig({
     base: '/Stopwatch-2077/',
     plugins: [
         vue(),
-        tailwindcss(), // ← register the Tailwind-Vite plugin here
+        tailwindcss(),
     ],
 })
