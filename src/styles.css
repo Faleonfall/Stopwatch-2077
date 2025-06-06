@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+@theme {
+    --color-cyber-background: #0D0D16;
+    --color-neon-cyan: #00F0FF;
+    --color-neon-pink: #FF007F;
+    --color-neon-yellow: #FFEA00;
+    --color-text-primary: #FFFFFF;
+    --font-cyber: "Orbitron", sans-serif;
+}
