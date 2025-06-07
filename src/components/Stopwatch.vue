@@ -89,6 +89,7 @@ import {
   nextTick,
 } from "vue";
 import Selectable from "./Selectable.vue";
+import {useKeyboardShortcuts} from "../composables/useKeyboardShortcuts";
 
 export default defineComponent({
   name: "Stopwatch",
@@ -175,6 +176,8 @@ export default defineComponent({
         });
       }
     };
+
+    useKeyboardShortcuts(toggle, reset);
 
     onBeforeUnmount(() => {
       clearInterval(intervalId!);
