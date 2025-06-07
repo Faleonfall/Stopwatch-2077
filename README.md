@@ -45,6 +45,7 @@ Launch the app:
 - **Keyboard Controls:**
     - `Spacebar` — Start / Stop
     - `R` — Reset
+    - `C` — Copy
 - **Copy Time:** Select and copy neon digits
 
 ---

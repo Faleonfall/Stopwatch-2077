@@ -1,7 +1,8 @@
 <template>
   <div class="min-h-screen flex flex-col justify-center items-center space-y-3">
+    <NeonCopiedMessage :trigger="copyTrigger" color="#ffe600"/>
     <Selectable ref="selectableRef" :selectable="!isRunning" :clearOnChange="true">
-      <div class="flex text-9xl font-cyber tabular-nums timer-select pb-3">
+      <div class="flex text-9xl font-cyber tabular-nums timer-select pb-3" @click="copyTime">
 
         <!-- Reset mid-run: everything updates instantly -->
         <template v-if="isRunning && justReset">
@@ -89,11 +90,13 @@ import {
   nextTick,
 } from "vue";
 import Selectable from "./Selectable.vue";
+import NeonCopiedMessage from "./NeonCopiedMessage.vue";
 import {useKeyboardShortcuts} from "../composables/useKeyboardShortcuts";
+import {useCopyToClipboard} from "../composables/useCopyToClipboard";
 
 export default defineComponent({
   name: "Stopwatch",
-  components: {Selectable},
+  components: {Selectable, NeonCopiedMessage},
   setup() {
     const selectableRef = ref<InstanceType<typeof Selectable> | null>(null);
     const elapsed = ref(0);
@@ -112,6 +115,17 @@ export default defineComponent({
 
     const isPaused = computed(() => !isRunning.value);
     const recentlyReset = computed(() => justReset.value && !isRunning.value);
+    const {copy, copyTrigger} = useCopyToClipboard();
+
+    const copyCooldown = ref(false);
+
+    function copyTime() {
+      if (copyCooldown.value) return; // prevent spamming
+      const time = `${formattedMinutes.value}:${formattedSeconds.value}:${formattedCentis.value}`;
+      copy(time);
+      copyCooldown.value = true;
+      setTimeout(() => (copyCooldown.value = false), 1000);
+    }
 
     const minutesKey = computed(() => {
       // paused + Reset → force "-reset" to trigger fade
@@ -177,7 +191,7 @@ export default defineComponent({
       }
     };
 
-    useKeyboardShortcuts(toggle, reset);
+    useKeyboardShortcuts(toggle, reset, copyTime);
 
     onBeforeUnmount(() => {
       clearInterval(intervalId!);
@@ -196,6 +210,8 @@ export default defineComponent({
       justReset,
       minutesKey,
       secondsKey,
+      copyTrigger,
+      copyTime,
     };
   },
 });
@@ -204,9 +220,16 @@ export default defineComponent({
 <style scoped>
 .text-9xl {
   font-size: 8rem !important;
+  cursor: pointer;
   text-shadow: 0 0 2px rgba(0, 240, 255, 0.8),
   0 0 6px rgba(0, 240, 255, 0.6),
   0 0 16px rgba(0, 240, 255, 0.3);
+}
+
+.timer-select .text-neon-yellow {
+  text-shadow: 0 0 2px rgba(255, 255, 0, 0.85),
+  0 0 6px rgba(255, 255, 0, 0.6),
+  0 0 16px rgba(255, 255, 0, 0.3);
 }
 
 @media (max-width: 768px) {
