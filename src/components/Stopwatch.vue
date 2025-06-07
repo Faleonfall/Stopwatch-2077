@@ -1,5 +1,6 @@
 <template>
   <div class="min-h-screen flex flex-col justify-center items-center space-y-3">
+    <NeonHelp/>
     <NeonCopiedMessage :trigger="copyTrigger" color="#ffe600"/>
     <Selectable ref="selectableRef" :selectable="!isRunning" :clearOnChange="true">
       <div class="flex text-9xl font-cyber tabular-nums timer-select pb-3" @click="copyTime">
@@ -71,10 +72,16 @@
 
     <!-- Controls -->
     <div class="flex space-x-12">
-      <button class="cyber-btn" @click="toggle">
+      <button
+          class="cyber-btn"
+          @click="toggle"
+      >
         {{ isRunning ? "Stop" : "Start" }}
       </button>
-      <button class="cyber-btn" @click="reset">
+      <button
+          class="cyber-btn"
+          @click="reset"
+      >
         Reset
       </button>
     </div>
@@ -91,12 +98,13 @@ import {
 } from "vue";
 import Selectable from "./Selectable.vue";
 import NeonCopiedMessage from "./NeonCopiedMessage.vue";
+import NeonHelp from "./NeonHelp.vue";
 import {useKeyboardShortcuts} from "../composables/useKeyboardShortcuts";
 import {useCopyToClipboard} from "../composables/useCopyToClipboard";
 
 export default defineComponent({
   name: "Stopwatch",
-  components: {Selectable, NeonCopiedMessage},
+  components: {NeonHelp, Selectable, NeonCopiedMessage},
   setup() {
     const selectableRef = ref<InstanceType<typeof Selectable> | null>(null);
     const elapsed = ref(0);

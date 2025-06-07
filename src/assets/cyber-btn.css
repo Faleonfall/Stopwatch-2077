@@ -46,6 +46,10 @@
     .cyber-btn:hover::before {
         opacity: 0.85;
     }
+
+    .cyber-btn:focus-visible {
+        outline: none;
+    }
 }
 
 @media (hover: none) and (pointer: coarse) {
