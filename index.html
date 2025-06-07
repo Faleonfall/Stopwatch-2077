@@ -20,7 +20,7 @@
     <meta property="og:description"
           content="A neon-themed online stopwatch, inspired by Cyberpunk. Fast, responsive, and installable on any device."/>
     <meta property="og:image" content="/og-image.png"/>
-    <meta property="og:url" content="https://faleonfall.github.io/Stopwatch-2077/"/>
+    <meta property="og:url" content="https://stopwatch2077.net/"/>
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image"/>
@@ -30,7 +30,7 @@
     <meta name="twitter:image" content="/og-image.png"/>
 
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://faleonfall.github.io/Stopwatch-2077/"/>
+    <link rel="canonical" href="https://stopwatch2077.net/"/>
 
     <!-- Robots: index, follow -->
     <meta name="robots" content="index, follow"/>
@@ -43,11 +43,20 @@
     <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png">
     <link rel="manifest" href="/site.webmanifest">
     <meta name="theme-color" content="#0D0D16">
-    <link rel="preconnect" href="https://fonts.gstatic.com"/>
-    <link
-            href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap"
-            rel="stylesheet"
+
+    <!-- DNS prefetch is cheapest, preconnect is stronger -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <!-- And for the actual font data (cross-origin) -->
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Then your existing Google Fonts CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap"
+          rel="stylesheet"
     />
+
 </head>
 <body>
 <div id="app"></div>
