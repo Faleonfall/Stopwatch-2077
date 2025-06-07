@@ -1,6 +1,6 @@
 # ⏱️ Stopwatch 2077
 
-![stopwatch](https://github.com/user-attachments/assets/a62667c5-7d7f-44f5-900f-48749eb2b2b8)
+![stopwatch](https://github.com/user-attachments/assets/97410ef8-e657-4109-9598-c91e8aca9c38)
 
 > ⚡️ **Stopwatch 2077** is a sleek, neon-lit online stopwatch, inspired by the aesthetics of cyberpunk. Built
 > with Vite, Vue 3, TypeScript, and Tailwind CSS, it delivers instant performance, a futuristic UI, and works on every
