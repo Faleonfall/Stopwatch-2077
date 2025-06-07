@@ -1,68 +1,72 @@
 <template>
   <div class="min-h-screen flex flex-col justify-center items-center space-y-3">
-    <!-- Fixed-width container, tabular numerals -->
-    <div class="flex text-9xl font-cyber tabular-nums">
-      <!-- Minutes -->
-      <template v-if="isRunning">
-        <span
-            class="text-neon-cyan w-[2ch] text-center inline-block"
-            :key="formattedMinutes"
-        >
-          {{ formattedMinutes }}
-        </span>
-      </template>
-      <template v-else>
-        <transition name="digit-fade" mode="out-in">
-          <span
-              class="text-neon-cyan w-[2ch] text-center inline-block"
-              :key="resetCount + '-' + formattedMinutes"
-          >
+    <Selectable ref="selectableRef" :selectable="!isRunning" :clearOnChange="true">
+      <div class="flex text-9xl font-cyber tabular-nums timer-select pb-3">
+
+        <!-- Reset mid-run: everything updates instantly -->
+        <template v-if="isRunning && justReset">
+          <span class="text-neon-cyan w-[2ch] text-center">
             {{ formattedMinutes }}
           </span>
-        </transition>
-      </template>
-
-      <span class="text-neon-yellow w-[0.6ch] text-center inline-block">:</span>
-
-      <!-- Seconds -->
-      <template v-if="isRunning">
-        <span
-            class="text-neon-cyan w-[2ch] text-center inline-block"
-            :key="formattedSeconds"
-        >
-          {{ formattedSeconds }}
-        </span>
-      </template>
-      <template v-else>
-        <transition name="digit-fade" mode="out-in">
-          <span
-              class="text-neon-cyan w-[2ch] text-center inline-block"
-              :key="resetCount + '-' + formattedSeconds"
-          >
+          <span class="text-neon-yellow w-[0.6ch] text-center">:</span>
+          <span class="text-neon-cyan w-[2ch] text-center">
             {{ formattedSeconds }}
           </span>
-        </transition>
-      </template>
-
-      <span class="text-neon-yellow w-[0.6ch] text-center inline-block">:</span>
-
-      <!-- Centiseconds -->
-      <template v-if="isPaused || recentlyReset">
-        <transition name="digit-fade" mode="out-in">
-          <span
-              class="text-neon-cyan w-[2ch] text-center inline-block"
-              :key="resetCount + '-' + formattedMilliseconds"
-          >
-            {{ formattedMilliseconds }}
+          <span class="text-neon-yellow w-[0.6ch] text-center">:</span>
+          <span class="text-neon-cyan w-[2ch] text-center">
+            {{ formattedCentis }}
           </span>
-        </transition>
-      </template>
-      <template v-else>
-        <span class="text-neon-cyan w-[2ch] text-center inline-block">
-          {{ formattedMilliseconds }}
-        </span>
-      </template>
-    </div>
+        </template>
+
+        <!-- Otherwise: per‐digit fade for minutes & seconds, and (when paused) for centis -->
+        <template v-else>
+          <!-- Minutes -->
+          <transition name="digit-fade" mode="out-in">
+            <span
+                class="text-neon-cyan w-[2ch] text-center inline-block"
+                :key="minutesKey"
+            >
+              {{ formattedMinutes }}
+            </span>
+          </transition>
+          <span class="text-neon-yellow w-[0.6ch] text-center inline-block">:</span>
+
+          <!-- Seconds -->
+          <transition name="digit-fade" mode="out-in">
+            <span
+                class="text-neon-cyan w-[2ch] text-center inline-block"
+                :key="secondsKey"
+            >
+              {{ formattedSeconds }}
+            </span>
+          </transition>
+          <span class="text-neon-yellow w-[0.6ch] text-center inline-block">:</span>
+
+          <!-- Centiseconds -->
+          <template v-if="isRunning">
+            <!-- running (not reset): always instant -->
+            <span
+                class="text-neon-cyan w-[2ch] text-center inline-block"
+                :key="formattedCentis"
+            >
+              {{ formattedCentis }}
+            </span>
+          </template>
+          <template v-else>
+            <!-- paused/reset: fade -->
+            <transition name="digit-fade" mode="out-in">
+              <span
+                  class="text-neon-cyan w-[2ch] text-center inline-block"
+                  :key="formattedCentis + '-' + (justReset ? 'reset' : 'idle')"
+              >
+                {{ formattedCentis }}
+              </span>
+            </transition>
+          </template>
+        </template>
+
+      </div>
+    </Selectable>
 
     <!-- Controls -->
     <div class="flex space-x-12">
@@ -76,73 +80,100 @@
   </div>
 </template>
 
+
 <script lang="ts">
 import {
   defineComponent,
   ref,
   computed,
-  onBeforeUnmount, nextTick,
+  onBeforeUnmount,
+  nextTick,
 } from "vue";
+import Selectable from "./Selectable.vue";
 
 export default defineComponent({
   name: "Stopwatch",
+  components: {Selectable},
   setup() {
+    const selectableRef = ref<InstanceType<typeof Selectable> | null>(null);
     const elapsed = ref(0);
     const isRunning = ref(false);
-    const isPaused = ref(true);
-    const resetCount = ref(0);
-    const lastAppliedReset = ref(0);
-    const startTime = ref(Date.now());
+    const justReset = ref(false);
     let intervalId: ReturnType<typeof setInterval> | null = null;
+    let startTime = 0;
 
     const minutes = computed(() => Math.floor(elapsed.value / 60000));
-    const seconds = computed(() =>
-        Math.floor((elapsed.value % 60000) / 1000)
-    );
-    const milliseconds = computed(() => elapsed.value % 1000);
+    const seconds = computed(() => Math.floor((elapsed.value % 60000) / 1000));
+    const centis = computed(() => Math.floor((elapsed.value % 1000) / 10));
 
-    const formattedMinutes = computed(() =>
-        String(minutes.value).padStart(2, "0")
-    );
-    const formattedSeconds = computed(() =>
-        String(seconds.value).padStart(2, "0")
-    );
-    const formattedMilliseconds = computed(() =>
-        String(Math.floor(milliseconds.value / 10)).padStart(2, "0")
-    );
+    const formattedMinutes = computed(() => String(minutes.value).padStart(2, "0"));
+    const formattedSeconds = computed(() => String(seconds.value).padStart(2, "0"));
+    const formattedCentis = computed(() => String(centis.value).padStart(2, "0"));
 
-    const recentlyReset = computed(() =>
-        !isRunning.value && resetCount.value > lastAppliedReset.value
-    );
+    const isPaused = computed(() => !isRunning.value);
+    const recentlyReset = computed(() => justReset.value && !isRunning.value);
+
+    const minutesKey = computed(() => {
+      // paused + Reset → force "-reset" to trigger fade
+      if (justReset.value && !isRunning.value) {
+        return `${formattedMinutes.value}-reset`
+      }
+      // normal tick → key is the number (fades whenever it changes)
+      return formattedMinutes.value
+    })
+
+    const secondsKey = computed(() => {
+      if (justReset.value && !isRunning.value) {
+        return `${formattedSeconds.value}-reset`
+      }
+      return formattedSeconds.value
+    })
+
+    const startInterval = () => {
+      clearInterval(intervalId!);
+      startTime = Date.now() - elapsed.value;
+      intervalId = setInterval(() => {
+        elapsed.value = Date.now() - startTime;
+      }, 10);
+    };
 
     const toggle = () => {
       if (isRunning.value) {
         clearInterval(intervalId!);
         isRunning.value = false;
-        isPaused.value = true;
       } else {
-        lastAppliedReset.value = resetCount.value;
-        isPaused.value = false;
+        startInterval();
         isRunning.value = true;
-        startTime.value = Date.now() - elapsed.value;
-        intervalId = setInterval(() => {
-          elapsed.value = Date.now() - startTime.value;
-        }, 10);
       }
+      selectableRef.value?.clearSelection();
     };
 
-    const reset = async () => {
+    const reset = () => {
       if (isRunning.value) {
-        elapsed.value = 0;
-        startTime.value = Date.now();
-      } else {
+        // mark that we’re in a running-reset
+        justReset.value = true;
+
         clearInterval(intervalId!);
         elapsed.value = 0;
-        isRunning.value = false;
-        resetCount.value++;
-        await nextTick();
-        await new Promise(res => setTimeout(res, 120));
-        lastAppliedReset.value = resetCount.value;
+        startInterval();
+
+        // clear the flag on next tick so normal ticking resumes
+        nextTick(() => {
+          justReset.value = false;
+        });
+
+        selectableRef.value?.clearSelection();
+      } else {
+        // unchanged: paused‐state reset with fade
+        clearInterval(intervalId!);
+        elapsed.value = 0;
+        justReset.value = true;
+        nextTick().then(() => {
+          setTimeout(() => {
+            justReset.value = false;
+            selectableRef.value?.clearSelection();
+          }, 120);
+        });
       }
     };
 
@@ -153,13 +184,16 @@ export default defineComponent({
     return {
       formattedMinutes,
       formattedSeconds,
-      formattedMilliseconds,
+      formattedCentis,
       isRunning,
       isPaused,
-      resetCount,
       recentlyReset,
+      selectableRef,
       toggle,
       reset,
+      justReset,
+      minutesKey,
+      secondsKey,
     };
   },
 });
@@ -181,6 +215,22 @@ export default defineComponent({
 .digit-fade-enter-from,
 .digit-fade-leave-to {
   opacity: 0;
+}
+
+.timer-select ::selection {
+  background: transparent;
+  color: #00ff2a;
+  text-shadow: 0 0 4px rgba(0, 255, 42, 0.8),
+  0 0 8px rgba(0, 255, 42, 0.6),
+  0 0 22px rgba(0, 255, 42, 0.3);
+}
+
+.timer-select ::-moz-selection {
+  background: transparent;
+  color: #00ff2a;
+  text-shadow: 0 0 4px rgba(0, 255, 42, 0.8),
+  0 0 8px rgba(0, 255, 42, 0.6),
+  0 0 22px rgba(0, 255, 42, 0.3);
 }
 
 .cyber-btn {
