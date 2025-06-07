@@ -1,0 +1,86 @@
+.cyber-btn {
+    position: relative;
+    color: var(--color-neon-yellow);
+    background: var(--color-cyber-background);
+    font-family: var(--font-cyber), sans-serif;
+    min-width: 13.5rem;
+    text-align: center;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    overflow: hidden;
+    padding: 0.75rem 3rem;
+    border: none;
+    border-radius: 1.125rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 0.15em;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 0 0 3px var(--color-neon-pink),
+    0 0 12px 2px var(--color-neon-pink);
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+.cyber-btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.6;
+    box-shadow: 0 0 21px 9px var(--color-neon-pink);
+    filter: blur(3px);
+    transition: opacity 0.2s;
+}
+
+/* Only apply hover styles on devices with a mouse (not on touch screens!) */
+@media (hover: hover) and (pointer: fine) {
+    .cyber-btn:hover {
+        background: var(--color-neon-pink);
+        color: var(--color-cyber-background);
+        box-shadow: 0 0 0 3px var(--color-neon-pink),
+        0 0 24px 5px var(--color-neon-pink);
+    }
+
+    .cyber-btn:hover::before {
+        opacity: 0.85;
+    }
+}
+
+@media (hover: none) and (pointer: coarse) {
+    .cyber-btn {
+        transition: background 0.25s cubic-bezier(.65, 0, .2, 1),
+        box-shadow 0.25s cubic-bezier(.8, .12, .19, 1),
+        color 0.15s,
+        transform 0.2s cubic-bezier(.8, .12, .19, 1);
+    }
+}
+
+/* On all devices, this applies for "pressed" (touch or mouse click) */
+.cyber-btn:active {
+    background: var(--color-neon-pink);
+    color: var(--color-cyber-background);
+    box-shadow: 0 0 0 3px var(--color-neon-pink),
+    0 0 24px 5px var(--color-neon-pink);
+    transition: none;
+}
+
+@media (max-width: 768px) {
+    .cyber-btn {
+        min-width: 13.5rem;
+        font-size: 1.5rem;
+        width: 100%;
+        box-sizing: border-box;
+        display: block; /* so padding is respected */
+        margin: 0; /* remove any horizontal margin */
+    }
+}
+
+@media (max-width: 480px) {
+    .cyber-btn {
+        min-width: 10rem;
+        padding: 0.7rem 1.3rem;
+        font-size: 1.5rem;
+    }
+}

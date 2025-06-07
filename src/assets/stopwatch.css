@@ -1,0 +1,26 @@
+
+.digit-fade-enter-active,
+.digit-fade-leave-active {
+    transition: opacity 0.15s ease-in-out;
+}
+
+.digit-fade-enter-from,
+.digit-fade-leave-to {
+    opacity: 0;
+}
+
+.timer-select ::selection {
+    background: transparent;
+    color: #00ff2a;
+    text-shadow: 0 0 4px rgba(0, 255, 42, 0.8),
+    0 0 8px rgba(0, 255, 42, 0.6),
+    0 0 22px rgba(0, 255, 42, 0.3);
+}
+
+.timer-select ::-moz-selection {
+    background: transparent;
+    color: #00ff2a;
+    text-shadow: 0 0 4px rgba(0, 255, 42, 0.8),
+    0 0 8px rgba(0, 255, 42, 0.6),
+    0 0 22px rgba(0, 255, 42, 0.3);
+}

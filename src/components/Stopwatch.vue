@@ -80,7 +80,6 @@
   </div>
 </template>
 
-
 <script lang="ts">
 import {
   defineComponent,
@@ -207,75 +206,48 @@ export default defineComponent({
   0 0 16px rgba(0, 240, 255, 0.3);
 }
 
-.digit-fade-enter-active,
-.digit-fade-leave-active {
-  transition: opacity 0.15s ease-in-out;
+@media (max-width: 768px) {
+  .text-9xl {
+    font-size: 5.3rem !important;
+  }
+
+  .timer-select .text-neon-yellow {
+    width: 0.35ch !important;
+    /* You can go even smaller if you want, try 0.28ch, but .35ch is safe */
+    display: inline-block; /* Ensures width is respected */
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .timer-select.pb-3 {
+    padding-bottom: 1.5rem;
+  }
+
+  .flex.space-x-12 {
+    gap: 2rem !important;
+  }
+
+  .min-h-screen {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
 }
 
-.digit-fade-enter-from,
-.digit-fade-leave-to {
-  opacity: 0;
-}
+@media (max-width: 480px) {
+  .text-9xl {
+    font-size: 4.2rem !important;
+  }
 
-.timer-select ::selection {
-  background: transparent;
-  color: #00ff2a;
-  text-shadow: 0 0 4px rgba(0, 255, 42, 0.8),
-  0 0 8px rgba(0, 255, 42, 0.6),
-  0 0 22px rgba(0, 255, 42, 0.3);
-}
+  .timer-select .text-neon-yellow {
+    width: 0.3ch !important;
+    /* You can go even smaller if you want, try 0.28ch, but .35ch is safe */
+    display: inline-block; /* Ensures width is respected */
+    padding-left: 0;
+    padding-right: 0;
+  }
 
-.timer-select ::-moz-selection {
-  background: transparent;
-  color: #00ff2a;
-  text-shadow: 0 0 4px rgba(0, 255, 42, 0.8),
-  0 0 8px rgba(0, 255, 42, 0.6),
-  0 0 22px rgba(0, 255, 42, 0.3);
-}
-
-.cyber-btn {
-  position: relative;
-  color: var(--color-neon-yellow);
-  background: var(--color-cyber-background);
-  font-family: var(--font-cyber), sans-serif;
-  min-width: 13.5rem;
-  text-align: center;
-  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-  overflow: hidden;
-  padding: 0.75rem 3rem;
-
-  border: none;
-  border-radius: 1.125rem;
-  text-transform: uppercase;
-  font-weight: bold;
-  letter-spacing: 0.15em;
-  font-size: 1.5rem;
-  cursor: pointer;
-  box-shadow: 0 0 0 3px var(--color-neon-pink),
-  0 0 12px 2px var(--color-neon-pink);
-}
-
-.cyber-btn::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.6;
-  box-shadow: 0 0 21px 9px var(--color-neon-pink);
-  filter: blur(3px);
-  transition: opacity 0.2s;
-}
-
-.cyber-btn:hover {
-  background: var(--color-neon-pink);
-  color: var(--color-cyber-background);
-  box-shadow: 0 0 0 3px var(--color-neon-pink),
-  0 0 24px 5px var(--color-neon-pink);
-}
-
-.cyber-btn:hover::before {
-  opacity: 0.85;
+  .flex.space-x-12 {
+    gap: 1.5rem !important;
+  }
 }
 </style>
