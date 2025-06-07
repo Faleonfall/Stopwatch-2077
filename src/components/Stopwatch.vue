@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-center space-y-9 p-12 select-none">
+  <div class="min-h-screen flex flex-col justify-center items-center space-y-3">
     <!-- Fixed-width container, tabular numerals -->
     <div class="flex text-9xl font-cyber tabular-nums">
       <!-- Minutes -->
