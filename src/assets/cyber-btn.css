@@ -72,6 +72,7 @@
     box-shadow: 0 0 0 3px var(--color-neon-pink),
     0 0 24px 5px var(--color-neon-pink);
     transition: none;
+    text-shadow: none;
 }
 
 @media (max-width: 768px) {

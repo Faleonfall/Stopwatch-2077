@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- Desktop (>=1024px): Show floating ? help -->
+    <!-- Desktop (>=1200px): Show floating ? help -->
     <div v-if="isDesktop" class="help-container">
       <button
           class="neon-help-btn select-none"
@@ -36,7 +36,7 @@
         >GitHub</a>
       </div>
     </div>
-    <!-- Mobile/tablet (<1024px): Show GitHub link centered -->
+    <!-- Mobile/tablet (<1200px): Show GitHub link centered -->
     <div v-else class="mobile-help-link">
       <a
           href="https://github.com/Faleonfall/Stopwatch-2077"
@@ -53,10 +53,10 @@ import {ref, watch, nextTick, onMounted, onUnmounted} from "vue";
 import {gsap} from "gsap";
 
 // --- Responsive detection ---
-const isDesktop = ref(window.innerWidth >= 1024);
+const isDesktop = ref(window.innerWidth >= 1200);
 
 function checkScreen() {
-  isDesktop.value = window.innerWidth >= 1024;
+  isDesktop.value = window.innerWidth >= 1200;
 }
 
 onMounted(() => {
