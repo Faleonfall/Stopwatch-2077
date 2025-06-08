@@ -26,7 +26,6 @@ export default defineComponent({
 
     const animate = () => {
       if (!neon.value) return;
-      console.log("Hi, old fart!");
       gsap.killTweensOf(neon.value); // Kill running animations
       visible.value = true;
       gsap.set(neon.value, {
