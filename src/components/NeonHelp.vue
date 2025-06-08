@@ -3,7 +3,7 @@
     <!-- Desktop (>=1024px): Show floating ? help -->
     <div v-if="isDesktop" class="help-container">
       <button
-          class="neon-help-btn"
+          class="neon-help-btn select-none"
           ref="helpBtn"
           @mouseenter="showPopup"
           @mouseleave="queueHidePopup"
@@ -15,7 +15,7 @@
       </button>
       <div
           v-if="isRendered"
-          class="neon-help-popup"
+          class="neon-help-popup select-none"
           ref="popup"
           tabindex="-1"
           @mouseenter="showPopup"
@@ -218,7 +218,6 @@ watch(show, (val) => {
   padding: 1.1rem 1.35rem 1.1rem 1.35rem;
   box-shadow: 0 0 14px var(--color-neon-pink, #FF007F), 0 0 10px #00f0ff22;
   z-index: 100;
-  user-select: text;
 }
 
 .neon-help-popup .help-title {

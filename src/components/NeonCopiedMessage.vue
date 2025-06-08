@@ -25,7 +25,6 @@ export default defineComponent({
     const neonColor = "#ffe600";
 
     const animate = () => {
-      console.log("Animating!", props.trigger, neon.value);
       if (!neon.value) return;
       gsap.killTweensOf(neon.value); // Kill running animations
       visible.value = true;
@@ -105,9 +104,9 @@ export default defineComponent({
   font-family: 'Monoton', cursive;
   font-size: 2.7rem;
   letter-spacing: 0.05em;
-  color: #ffe600;
-  text-shadow: 0 0 12px #ffe600,
-  0 0 20px #ffe600;
+  color: var(--color-neon-yellow);
+  text-shadow: 0 0 12px var(--color-neon-yellow),
+  0 0 20px var(--color-neon-yellow);
 }
 
 .neon-message {

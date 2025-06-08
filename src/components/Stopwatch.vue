@@ -73,13 +73,13 @@
     <!-- Controls -->
     <div class="flex space-x-12">
       <button
-          class="cyber-btn"
+          class="cyber-btn select-none"
           @click="toggle"
       >
         {{ isRunning ? "Stop" : "Start" }}
       </button>
       <button
-          class="cyber-btn"
+          class="cyber-btn select-none"
           @click="reset"
       >
         Reset
@@ -229,15 +229,15 @@ export default defineComponent({
 .text-9xl {
   font-size: 8rem !important;
   cursor: pointer;
-  text-shadow: 0 0 2px rgba(0, 240, 255, 0.8),
-  0 0 6px rgba(0, 240, 255, 0.6),
-  0 0 16px rgba(0, 240, 255, 0.3);
+  text-shadow: 0 0 2px rgba(var(--color-neon-cyan-rgb), 0.8),
+  0 0 6px rgba(var(--color-neon-cyan-rgb), 0.6),
+  0 0 16px rgba(var(--color-neon-cyan-rgb), 0.3);
 }
 
 .timer-select .text-neon-yellow {
-  text-shadow: 0 0 2px rgba(255, 255, 0, 0.85),
-  0 0 6px rgba(255, 255, 0, 0.6),
-  0 0 16px rgba(255, 255, 0, 0.3);
+  text-shadow: 0 0 2px rgba(var(--color-neon-yellow-rgb), 0.8),
+  0 0 6px rgba(var(--color-neon-yellow-rgb), 0.6),
+  0 0 16px rgba(var(--color-neon-yellow-rgb), 0.3);
 }
 
 @media (max-width: 768px) {
@@ -247,7 +247,6 @@ export default defineComponent({
 
   .timer-select .text-neon-yellow {
     width: 0.35ch !important;
-    /* You can go even smaller if you want, try 0.28ch, but .35ch is safe */
     display: inline-block; /* Ensures width is respected */
     padding-left: 0;
     padding-right: 0;
@@ -274,7 +273,6 @@ export default defineComponent({
 
   .timer-select .text-neon-yellow {
     width: 0.3ch !important;
-    /* You can go even smaller if you want, try 0.28ch, but .35ch is safe */
     display: inline-block; /* Ensures width is respected */
     padding-left: 0;
     padding-right: 0;
