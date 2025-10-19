@@ -11,7 +11,7 @@
 ## 🟢 Live
 
 Launch the app:  
-[https://faleonfall.github.io/Stopwatch-2077/](https://faleonfall.github.io/Stopwatch-2077/)
+[stopwatch2077.net](stopwatch2077.net)
 
 ---
 
@@ -40,7 +40,7 @@ Launch the app:
 
 ## 📲 Usage
 
-- **Open Online:** [Stopwatch 2077](https://faleonfall.github.io/Stopwatch-2077/)
+- **Open Online:** [Stopwatch 2077](stopwatch2077.net)
 - **Install:** Tap “Add to Home Screen” for a native-app feel
 - **Keyboard Controls:**
     - `Spacebar` — Start / Stop
