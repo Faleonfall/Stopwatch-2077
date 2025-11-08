@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-cyber-background">
+  <div class="flex items-center justify-center bg-cyber-background overflow-hidden h-[100svh]">
     <Stopwatch/>
   </div>
 </template>

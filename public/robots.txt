@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://stopwatch2077.net/sitemap.xml
