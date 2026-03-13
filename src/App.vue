@@ -1,18 +1,19 @@
 <template>
-  <div class="flex items-center justify-center bg-cyber-background overflow-hidden h-svh">
-    <Stopwatch/>
+  <div
+    class="flex items-center justify-center bg-cyber-background overflow-hidden h-svh"
+  >
+    <Stopwatch />
   </div>
 </template>
 
 <script lang="ts">
-import {defineComponent} from "vue";
+import { defineComponent } from "vue";
 import Stopwatch from "./components/Stopwatch.vue";
 
 export default defineComponent({
   name: "App",
-  components: {Stopwatch},
+  components: { Stopwatch },
 });
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

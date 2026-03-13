@@ -1,63 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Google verification -->
-    <meta name="google-site-verification" content="ALyCtMPWvdxYElktWtS88bBwlx1Ya67EFgkxPAtMv30"/>
+      <!-- Google verification -->
+      <meta name="google-site-verification" content="ALyCtMPWvdxYElktWtS88bBwlx1Ya67EFgkxPAtMv30" />
 
-    <title>Stopwatch 2077 – Online Timer</title>
-    <meta name="description"
-          content="A neon-themed online stopwatch, inspired by Cyberpunk. Fast, responsive, and installable on any device."/>
-    <meta name="keywords"
-          content="stopwatch, stopwatch online, online stopwatch, cyberpunk, neon, vue, vite, PWA, futuristic"/>
-    <meta name="author" content="Volodymyr Kryvytskyi"/>
+      <title>Stopwatch 2077 - Online Stopwatch</title>
+      <meta name="description"
+            content="Stopwatch 2077 is a free online stopwatch with a neon cyberpunk design, keyboard shortcuts, instant copy, and installable PWA support." />
+      <meta name="author" content="Volodymyr Kryvytskyi" />
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website"/>
-    <meta property="og:title" content="Stopwatch 2077 – Online Timer"/>
-    <meta property="og:description"
-          content="A neon-themed online stopwatch, inspired by Cyberpunk. Fast, responsive, and installable on any device."/>
-    <meta property="og:url" content="https://stopwatch2077.net/"/>
+      <!-- Open Graph / Facebook -->
+      <meta property="og:type" content="website" />
+      <meta property="og:title" content="Stopwatch 2077 - Online Stopwatch" />
+      <meta property="og:description"
+            content="A free online stopwatch with a neon cyberpunk look, keyboard shortcuts, copy-to-clipboard support, and PWA installability." />
+      <meta property="og:url" content="https://stopwatch2077.net/" />
+      <meta property="og:site_name" content="Stopwatch 2077" />
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image"/>
-    <meta name="twitter:title" content="Stopwatch 2077 – Online Timer"/>
-    <meta name="twitter:description"
-          content="A neon-themed online stopwatch, inspired by Cyberpunk. Fast, responsive, and installable on any device."/>
+      <!-- Twitter Card -->
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content="Stopwatch 2077 - Online Stopwatch" />
+      <meta name="twitter:description"
+            content="A free online stopwatch with a neon cyberpunk look, keyboard shortcuts, copy-to-clipboard support, and PWA installability." />
 
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://stopwatch2077.net/"/>
+      <!-- Canonical URL -->
+      <link rel="canonical" href="https://stopwatch2077.net/" />
 
-    <!-- Robots: index, follow -->
-    <meta name="robots" content="index, follow"/>
+      <!-- Robots: index, follow, and allow large previews -->
+      <meta name="robots" content="index, follow, max-image-preview:large" />
 
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="shortcut icon" href="/favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
-    <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png">
-    <link rel="manifest" href="/site.webmanifest">
-    <meta name="theme-color" content="#0D0D16">
+      <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+      <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+      <link rel="shortcut icon" href="/favicon.ico">
+      <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+      <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
+      <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png">
+      <link rel="manifest" href="/site.webmanifest">
+      <meta name="theme-color" content="#0D0D16">
+      <meta name="application-name" content="Stopwatch 2077">
 
-    <!-- DNS prefetch is cheapest, preconnect is stronger -->
-    <link rel="dns-prefetch" href="//fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+      <!-- DNS prefetch is cheapest, preconnect is stronger -->
+      <link rel="dns-prefetch" href="//fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.googleapis.com">
 
-    <!-- And for the actual font data (cross-origin) -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <!-- And for the actual font data (cross-origin) -->
+      <link rel="dns-prefetch" href="//fonts.gstatic.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <!-- Then your existing Google Fonts CSS -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap"
-          rel="stylesheet"
-    />
+      <!-- Then your existing Google Fonts CSS -->
+      <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet" />
+      <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "Stopwatch 2077",
+            "alternateName": "Stopwatch2077",
+            "url": "https://stopwatch2077.net/"
+        }
+    </script>
+      <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            "name": "Stopwatch 2077",
+            "url": "https://stopwatch2077.net/",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "description": "A free online stopwatch with a neon cyberpunk design, keyboard shortcuts, copy-to-clipboard support, and installable PWA support."
+        }
+    </script>
 
 </head>
+
 <body>
-<div id="app"></div>
-<script type="module" src="/src/main.ts"></script>
+      <div id="app"></div>
+      <noscript>Stopwatch 2077 is a free online stopwatch. Enable JavaScript to use the timer.</noscript>
+      <script type="module" src="/src/main.ts"></script>
 </body>
+
 </html>
