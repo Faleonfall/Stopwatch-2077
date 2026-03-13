@@ -1,15 +1,15 @@
 <template>
   <div :class="[selectable ? 'select-text' : 'select-none']">
-    <slot/>
+    <slot />
   </div>
 </template>
 
 <script setup lang="ts">
-import {watch} from 'vue';
+import { watch } from "vue";
 
 const props = defineProps<{
-  selectable: boolean,
-  clearOnChange?: boolean
+  selectable: boolean;
+  clearOnChange?: boolean;
 }>();
 
 function clearSelection() {
@@ -19,14 +19,14 @@ function clearSelection() {
   }
 }
 
-defineExpose({clearSelection});
+defineExpose({ clearSelection });
 
 watch(
-    () => props.selectable,
-    (now, old) => {
-      if (props.clearOnChange && old !== undefined && now !== old && !now) {
-        clearSelection();
-      }
+  () => props.selectable,
+  (now, old) => {
+    if (props.clearOnChange && old !== undefined && now !== old && !now) {
+      clearSelection();
     }
+  },
 );
 </script>

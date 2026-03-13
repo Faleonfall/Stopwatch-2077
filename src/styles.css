@@ -1,22 +1,24 @@
 @import "tailwindcss";
 
-html, body {
-    margin: 0;
-    padding: 0;
-    min-height: 100%;
-    background-color: var(--color-cyber-background); /* or #0D0D16 directly */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background-color: var(--color-cyber-background);
+  /* or #0D0D16 directly */
 }
 
 @theme {
-    --color-cyber-background: #0D0D16;
-    --color-cyber-background-rgb: 13, 13, 22;
-    --color-neon-cyan: #00F0FF;
-    --color-neon-cyan-rgb: 0, 240, 255;
-    --color-neon-pink: #FF007F;
-    --color-neon-pink-rgb: 255, 0, 127;
-    --color-neon-yellow: #FFEA00;
-    --color-neon-yellow-rgb: 255, 234, 0;
-    --color-text-primary: #FFFFFF;
-    --color-text-primary-rgb: 255, 255, 255;
-    --font-cyber: "Orbitron", sans-serif;
+  --color-cyber-background: #0d0d16;
+  --color-cyber-background-rgb: 13, 13, 22;
+  --color-neon-cyan: #00f0ff;
+  --color-neon-cyan-rgb: 0, 240, 255;
+  --color-neon-pink: #ff007f;
+  --color-neon-pink-rgb: 255, 0, 127;
+  --color-neon-yellow: #ffea00;
+  --color-neon-yellow-rgb: 255, 234, 0;
+  --color-text-primary: #ffffff;
+  --color-text-primary-rgb: 255, 255, 255;
+  --font-cyber: "Orbitron", sans-serif;
 }

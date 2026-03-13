@@ -15,35 +15,36 @@ Access the application:
 
 ## ✨ Features
 
-- **High Performance:** Instant startup, smooth operation, minimal latency  
-- **Cyberpunk Interface:** Neon highlights, glowing transitions, futuristic typography  
-- **Responsive Design:** Optimized for all devices, from desktops to mobile  
-- **Progressive Web App:** Works offline and can be added to the home screen  
-- **Copy-Friendly:** Easily select and copy the current time  
-- **Intuitive Controls:** Start, stop, and reset via click or keyboard shortcuts  
-- **Accessibility Focused:** Clear contrast, keyboard navigation support  
+- **High Performance:** Instant startup, smooth operation, minimal latency
+- **Cyberpunk Interface:** Neon highlights, glowing transitions, futuristic typography
+- **Responsive Design:** Optimized for all devices, from desktops to mobile
+- **Installable Experience:** Can be added to the home screen on supported devices
+- **Copy-Friendly:** Easily select and copy the current time
+- **Intuitive Controls:** Start, stop, and reset via click or keyboard shortcuts
+- **Accessibility Aware:** Clear contrast and keyboard shortcut support
 - **Dark Mode Default:** Immersive night-city aesthetic
 
 ---
 
 ## 🛠️ Technology Stack
 
-- [Vue 3](https://vuejs.org/)  
-- [Vite](https://vitejs.dev/)  
-- [TypeScript](https://www.typescriptlang.org/)  
-- [Tailwind CSS](https://tailwindcss.com/)  
-- PWA Support via Web Manifest
+- [Vue 3](https://vuejs.org/)
+- [Vite](https://vitejs.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [GSAP](https://gsap.com/)
+- Web App Manifest support
 
 ---
 
 ## 📲 Usage
 
-- **Online Access:** [Stopwatch 2077](https://stopwatch2077.net/)  
-- **Installation:** Use “Add to Home Screen” for an app-like experience  
+- **Online Access:** [Stopwatch 2077](https://stopwatch2077.net/)
+- **Installation:** Use “Add to Home Screen” for an app-like experience
 - **Keyboard Shortcuts:**
-    - `Spacebar` — Start / Stop  
-    - `R` — Reset  
-    - `C` — Copy current time  
+  - `Spacebar` — Start / Stop
+  - `R` — Reset
+  - `C` — Copy current time
 - **Copy Time:** Select and copy the displayed time easily
 
 ---
@@ -55,3 +56,4 @@ git clone https://github.com/faleonfall/Stopwatch-2077.git
 cd Stopwatch-2077
 npm install
 npm run dev
+```

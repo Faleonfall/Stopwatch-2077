@@ -1,10 +1,16 @@
 <template>
   <div class="min-h-screen flex flex-col justify-center items-center space-y-3">
-    <NeonHelp/>
-    <NeonCopiedMessage :trigger="copyTrigger" color="#ffe600"/>
-    <Selectable ref="selectableRef" :selectable="!isRunning" :clearOnChange="true">
-      <div class="flex text-9xl font-cyber tabular-nums timer-select pb-3" @click="copyTime">
-
+    <NeonHelp />
+    <NeonCopiedMessage :trigger="copyTrigger" color="#ffe600" />
+    <Selectable
+      ref="selectableRef"
+      :selectable="!isRunning"
+      :clearOnChange="true"
+    >
+      <div
+        class="flex text-9xl font-cyber tabular-nums timer-select pb-3"
+        @click="copyTime"
+      >
         <!-- Reset mid-run: everything updates instantly -->
         <template v-if="isRunning && justReset">
           <span class="text-neon-cyan w-[2ch] text-center">
@@ -25,31 +31,35 @@
           <!-- Minutes -->
           <transition name="digit-fade" mode="out-in">
             <span
-                class="text-neon-cyan w-[2ch] text-center inline-block"
-                :key="minutesKey"
+              class="text-neon-cyan w-[2ch] text-center inline-block"
+              :key="minutesKey"
             >
               {{ formattedMinutes }}
             </span>
           </transition>
-          <span class="text-neon-yellow w-[0.6ch] text-center inline-block">:</span>
+          <span class="text-neon-yellow w-[0.6ch] text-center inline-block"
+            >:</span
+          >
 
           <!-- Seconds -->
           <transition name="digit-fade" mode="out-in">
             <span
-                class="text-neon-cyan w-[2ch] text-center inline-block"
-                :key="secondsKey"
+              class="text-neon-cyan w-[2ch] text-center inline-block"
+              :key="secondsKey"
             >
               {{ formattedSeconds }}
             </span>
           </transition>
-          <span class="text-neon-yellow w-[0.6ch] text-center inline-block">:</span>
+          <span class="text-neon-yellow w-[0.6ch] text-center inline-block"
+            >:</span
+          >
 
           <!-- Centiseconds -->
           <template v-if="isRunning">
             <!-- running (not reset): always instant -->
             <span
-                class="text-neon-cyan w-[2ch] text-center inline-block"
-                :key="formattedCentis"
+              class="text-neon-cyan w-[2ch] text-center inline-block"
+              :key="formattedCentis"
             >
               {{ formattedCentis }}
             </span>
@@ -58,53 +68,38 @@
             <!-- paused/reset: fade -->
             <transition name="digit-fade" mode="out-in">
               <span
-                  class="text-neon-cyan w-[2ch] text-center inline-block"
-                  :key="formattedCentis + '-' + (justReset ? 'reset' : 'idle')"
+                class="text-neon-cyan w-[2ch] text-center inline-block"
+                :key="formattedCentis + '-' + (justReset ? 'reset' : 'idle')"
               >
                 {{ formattedCentis }}
               </span>
             </transition>
           </template>
         </template>
-
       </div>
     </Selectable>
 
     <!-- Controls -->
     <div class="flex space-x-12">
-      <button
-          class="cyber-btn select-none"
-          @click="toggle"
-      >
+      <button class="cyber-btn select-none" @click="toggle">
         {{ isRunning ? "Stop" : "Start" }}
       </button>
-      <button
-          class="cyber-btn select-none"
-          @click="reset"
-      >
-        Reset
-      </button>
+      <button class="cyber-btn select-none" @click="reset">Reset</button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  ref,
-  computed,
-  onBeforeUnmount,
-  nextTick,
-} from "vue";
+import { defineComponent, ref, computed, onBeforeUnmount, nextTick } from "vue";
 import Selectable from "./Selectable.vue";
 import NeonCopiedMessage from "./NeonCopiedMessage.vue";
 import NeonHelp from "./NeonHelp.vue";
-import {useKeyboardShortcuts} from "../composables/useKeyboardShortcuts";
-import {useCopyToClipboard} from "../composables/useCopyToClipboard";
+import { useKeyboardShortcuts } from "../composables/useKeyboardShortcuts";
+import { useCopyToClipboard } from "../composables/useCopyToClipboard";
 
 export default defineComponent({
   name: "Stopwatch",
-  components: {NeonHelp, Selectable, NeonCopiedMessage},
+  components: { NeonHelp, Selectable, NeonCopiedMessage },
   setup() {
     const selectableRef = ref<InstanceType<typeof Selectable> | null>(null);
     const elapsed = ref(0);
@@ -117,13 +112,19 @@ export default defineComponent({
     const seconds = computed(() => Math.floor((elapsed.value % 60000) / 1000));
     const centis = computed(() => Math.floor((elapsed.value % 1000) / 10));
 
-    const formattedMinutes = computed(() => String(minutes.value).padStart(2, "0"));
-    const formattedSeconds = computed(() => String(seconds.value).padStart(2, "0"));
-    const formattedCentis = computed(() => String(centis.value).padStart(2, "0"));
+    const formattedMinutes = computed(() =>
+      String(minutes.value).padStart(2, "0"),
+    );
+    const formattedSeconds = computed(() =>
+      String(seconds.value).padStart(2, "0"),
+    );
+    const formattedCentis = computed(() =>
+      String(centis.value).padStart(2, "0"),
+    );
 
     const isPaused = computed(() => !isRunning.value);
     const recentlyReset = computed(() => justReset.value && !isRunning.value);
-    const {copy, copyTrigger} = useCopyToClipboard();
+    const { copy, copyTrigger } = useCopyToClipboard();
 
     const copyCooldown = ref(false);
 
@@ -138,18 +139,18 @@ export default defineComponent({
     const minutesKey = computed(() => {
       // paused + Reset → force "-reset" to trigger fade
       if (justReset.value && !isRunning.value) {
-        return `${formattedMinutes.value}-reset`
+        return `${formattedMinutes.value}-reset`;
       }
       // normal tick → key is the number (fades whenever it changes)
-      return formattedMinutes.value
-    })
+      return formattedMinutes.value;
+    });
 
     const secondsKey = computed(() => {
       if (justReset.value && !isRunning.value) {
-        return `${formattedSeconds.value}-reset`
+        return `${formattedSeconds.value}-reset`;
       }
-      return formattedSeconds.value
-    })
+      return formattedSeconds.value;
+    });
 
     const startInterval = () => {
       clearInterval(intervalId!);
@@ -229,15 +230,17 @@ export default defineComponent({
 .text-9xl {
   font-size: 8rem !important;
   cursor: pointer;
-  text-shadow: 0 0 2px rgba(var(--color-neon-cyan-rgb), 0.8),
-  0 0 6px rgba(var(--color-neon-cyan-rgb), 0.6),
-  0 0 16px rgba(var(--color-neon-cyan-rgb), 0.3);
+  text-shadow:
+    0 0 2px rgba(var(--color-neon-cyan-rgb), 0.8),
+    0 0 6px rgba(var(--color-neon-cyan-rgb), 0.6),
+    0 0 16px rgba(var(--color-neon-cyan-rgb), 0.3);
 }
 
 .timer-select .text-neon-yellow {
-  text-shadow: 0 0 2px rgba(var(--color-neon-yellow-rgb), 0.8),
-  0 0 6px rgba(var(--color-neon-yellow-rgb), 0.6),
-  0 0 16px rgba(var(--color-neon-yellow-rgb), 0.3);
+  text-shadow:
+    0 0 2px rgba(var(--color-neon-yellow-rgb), 0.8),
+    0 0 6px rgba(var(--color-neon-yellow-rgb), 0.6),
+    0 0 16px rgba(var(--color-neon-yellow-rgb), 0.3);
 }
 
 @media (max-width: 768px) {

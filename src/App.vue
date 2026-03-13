@@ -1,9 +1,9 @@
 <template>
-  <div
+  <main
     class="flex items-center justify-center bg-cyber-background overflow-hidden h-svh"
   >
     <Stopwatch />
-  </div>
+  </main>
 </template>
 
 <script lang="ts">
