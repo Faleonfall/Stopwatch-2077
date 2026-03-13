@@ -96,6 +96,10 @@ import NeonCopiedMessage from "./NeonCopiedMessage.vue";
 import NeonHelp from "./NeonHelp.vue";
 import { useKeyboardShortcuts } from "../composables/useKeyboardShortcuts";
 import { useCopyToClipboard } from "../composables/useCopyToClipboard";
+import {
+  formatStopwatchCopyTime,
+  formatStopwatchDisplayTime,
+} from "../utils/formatStopwatchTime";
 
 export default defineComponent({
   name: "Stopwatch",
@@ -108,19 +112,12 @@ export default defineComponent({
     let intervalId: ReturnType<typeof setInterval> | null = null;
     let startTime = 0;
 
-    const minutes = computed(() => Math.floor(elapsed.value / 60000));
-    const seconds = computed(() => Math.floor((elapsed.value % 60000) / 1000));
-    const centis = computed(() => Math.floor((elapsed.value % 1000) / 10));
-
-    const formattedMinutes = computed(() =>
-      String(minutes.value).padStart(2, "0"),
+    const displayTime = computed(() =>
+      formatStopwatchDisplayTime(elapsed.value),
     );
-    const formattedSeconds = computed(() =>
-      String(seconds.value).padStart(2, "0"),
-    );
-    const formattedCentis = computed(() =>
-      String(centis.value).padStart(2, "0"),
-    );
+    const formattedMinutes = computed(() => displayTime.value.minutes);
+    const formattedSeconds = computed(() => displayTime.value.seconds);
+    const formattedCentis = computed(() => displayTime.value.centiseconds);
 
     const isPaused = computed(() => !isRunning.value);
     const recentlyReset = computed(() => justReset.value && !isRunning.value);
@@ -128,10 +125,14 @@ export default defineComponent({
 
     const copyCooldown = ref(false);
 
+    function getCurrentElapsed() {
+      return isRunning.value ? Date.now() - startTime : elapsed.value;
+    }
+
     function copyTime() {
       if (copyCooldown.value) return; // prevent spamming
-      const time = `${formattedMinutes.value}:${formattedSeconds.value}:${formattedCentis.value}`;
-      copy(time);
+      const currentElapsed = getCurrentElapsed();
+      copy(formatStopwatchCopyTime(currentElapsed));
       copyCooldown.value = true;
       setTimeout(() => (copyCooldown.value = false), 1000);
     }
