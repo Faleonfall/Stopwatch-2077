@@ -33,7 +33,6 @@ Access the application:
 - [TypeScript](https://www.typescriptlang.org/)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [GSAP](https://gsap.com/)
-- Web App Manifest support
 
 ---
 

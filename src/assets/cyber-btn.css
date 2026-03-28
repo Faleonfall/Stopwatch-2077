@@ -16,7 +16,7 @@
     font-size: 1.5rem;
     cursor: pointer;
     box-shadow: 0 0 0 3px var(--color-neon-pink),
-        0 0 12px 2px var(--color-neon-pink);
+        0 0 14px rgba(var(--color-neon-pink-rgb), 0.42);
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
     text-shadow: 0 0 2px rgba(var(--color-neon-yellow-rgb), 0.8),
@@ -24,17 +24,11 @@
         0 0 16px rgba(var(--color-neon-yellow-rgb), 0.3);
 }
 
-.cyber-btn::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    pointer-events: none;
-    z-index: 0;
-    opacity: 0.6;
-    box-shadow: 0 0 21px 9px var(--color-neon-pink);
-    filter: blur(3px);
-    transition: opacity 0.2s;
+.cyber-btn:focus-visible {
+    outline: 2px solid var(--color-neon-yellow);
+    outline-offset: 4px;
+    box-shadow: 0 0 0 3px var(--color-neon-pink),
+        0 0 28px rgba(var(--color-neon-pink-rgb), 0.72);
 }
 
 /* Only apply hover styles on devices with a mouse (not on touch screens!) */
@@ -43,17 +37,10 @@
         background: var(--color-neon-pink);
         color: var(--color-cyber-background);
         box-shadow: 0 0 0 3px var(--color-neon-pink),
-            0 0 24px 5px var(--color-neon-pink);
+            0 0 28px rgba(var(--color-neon-pink-rgb), 0.72);
         text-shadow: none;
     }
 
-    .cyber-btn:hover::before {
-        opacity: 0.85;
-    }
-
-    .cyber-btn:focus-visible {
-        outline: none;
-    }
 }
 
 @media (hover: none) and (pointer: coarse) {
@@ -70,7 +57,7 @@
     background: var(--color-neon-pink);
     color: var(--color-cyber-background);
     box-shadow: 0 0 0 3px var(--color-neon-pink),
-        0 0 24px 5px var(--color-neon-pink);
+        0 0 34px rgba(var(--color-neon-pink-rgb), 0.86);
     transition: none;
     text-shadow: none;
 }

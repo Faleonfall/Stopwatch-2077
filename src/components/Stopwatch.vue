@@ -1,6 +1,5 @@
 <template>
   <div class="min-h-screen flex flex-col justify-center items-center space-y-3">
-    <NeonHelp />
     <NeonCopiedMessage :trigger="copyTrigger" color="#ffe600" />
     <Selectable
       ref="selectableRef"
@@ -86,6 +85,7 @@
       </button>
       <button class="cyber-btn select-none" @click="reset">Reset</button>
     </div>
+    <NeonHelp />
   </div>
 </template>
 

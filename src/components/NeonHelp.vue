@@ -41,6 +41,7 @@
         <a
           href="https://github.com/Faleonfall/Stopwatch-2077"
           class="help-link"
+          tabindex="-1"
           target="_blank"
           rel="noopener"
           >GitHub</a
@@ -217,6 +218,11 @@ watch(show, (val) => {
     0 0 8px var(--color-neon-pink, #ff007f),
     0 0 16px var(--color-neon-pink, #ff007f);
   background: #22223a;
+}
+
+.neon-help-btn:focus-visible {
+  outline: 2px solid var(--color-neon-yellow);
+  outline-offset: 4px;
 }
 
 .neon-help-popup {
