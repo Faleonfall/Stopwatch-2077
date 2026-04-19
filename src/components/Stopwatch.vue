@@ -90,130 +90,58 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, onBeforeUnmount, nextTick } from "vue";
+import { defineComponent, ref } from "vue";
 import Selectable from "./Selectable.vue";
 import NeonCopiedMessage from "./NeonCopiedMessage.vue";
 import NeonHelp from "./NeonHelp.vue";
 import { useKeyboardShortcuts } from "../composables/useKeyboardShortcuts";
 import { useCopyToClipboard } from "../composables/useCopyToClipboard";
-import {
-  formatStopwatchCopyTime,
-  formatStopwatchDisplayTime,
-} from "../utils/formatStopwatchTime";
+import { useStopwatch } from "../composables/useStopwatch";
 
 export default defineComponent({
   name: "Stopwatch",
   components: { NeonHelp, Selectable, NeonCopiedMessage },
   setup() {
     const selectableRef = ref<InstanceType<typeof Selectable> | null>(null);
-    const elapsed = ref(0);
-    const isRunning = ref(false);
-    const justReset = ref(false);
-    let intervalId: ReturnType<typeof setInterval> | null = null;
-    let startTime = 0;
-
-    const displayTime = computed(() =>
-      formatStopwatchDisplayTime(elapsed.value),
-    );
-    const formattedMinutes = computed(() => displayTime.value.minutes);
-    const formattedSeconds = computed(() => displayTime.value.seconds);
-    const formattedCentis = computed(() => displayTime.value.centiseconds);
-
-    const isPaused = computed(() => !isRunning.value);
-    const recentlyReset = computed(() => justReset.value && !isRunning.value);
+    const {
+      formattedMinutes,
+      formattedSeconds,
+      formattedCentis,
+      getCopyTime,
+      isRunning,
+      justReset,
+      minutesKey,
+      reset: resetStopwatch,
+      secondsKey,
+      toggle: toggleStopwatch,
+    } = useStopwatch();
     const { copy, copyTrigger } = useCopyToClipboard();
-
     const copyCooldown = ref(false);
-
-    function getCurrentElapsed() {
-      return isRunning.value ? Date.now() - startTime : elapsed.value;
-    }
 
     function copyTime() {
       if (copyCooldown.value) return; // prevent spamming
-      const currentElapsed = getCurrentElapsed();
-      copy(formatStopwatchCopyTime(currentElapsed));
+      copy(getCopyTime());
       copyCooldown.value = true;
       setTimeout(() => (copyCooldown.value = false), 1000);
     }
 
-    const minutesKey = computed(() => {
-      // paused + Reset → force "-reset" to trigger fade
-      if (justReset.value && !isRunning.value) {
-        return `${formattedMinutes.value}-reset`;
-      }
-      // normal tick → key is the number (fades whenever it changes)
-      return formattedMinutes.value;
-    });
-
-    const secondsKey = computed(() => {
-      if (justReset.value && !isRunning.value) {
-        return `${formattedSeconds.value}-reset`;
-      }
-      return formattedSeconds.value;
-    });
-
-    const startInterval = () => {
-      clearInterval(intervalId!);
-      startTime = Date.now() - elapsed.value;
-      intervalId = setInterval(() => {
-        elapsed.value = Date.now() - startTime;
-      }, 10);
-    };
-
-    const toggle = () => {
-      if (isRunning.value) {
-        clearInterval(intervalId!);
-        isRunning.value = false;
-      } else {
-        startInterval();
-        isRunning.value = true;
-      }
+    function toggle() {
+      toggleStopwatch();
       selectableRef.value?.clearSelection();
-    };
+    }
 
-    const reset = () => {
-      if (isRunning.value) {
-        // mark that we’re in a running-reset
-        justReset.value = true;
-
-        clearInterval(intervalId!);
-        elapsed.value = 0;
-        startInterval();
-
-        // clear the flag on next tick so normal ticking resumes
-        nextTick(() => {
-          justReset.value = false;
-        });
-
-        selectableRef.value?.clearSelection();
-      } else {
-        // unchanged: paused‐state reset with fade
-        clearInterval(intervalId!);
-        elapsed.value = 0;
-        justReset.value = true;
-        nextTick().then(() => {
-          setTimeout(() => {
-            justReset.value = false;
-            selectableRef.value?.clearSelection();
-          }, 120);
-        });
-      }
-    };
+    function reset() {
+      resetStopwatch();
+      selectableRef.value?.clearSelection();
+    }
 
     useKeyboardShortcuts(toggle, reset, copyTime);
-
-    onBeforeUnmount(() => {
-      clearInterval(intervalId!);
-    });
 
     return {
       formattedMinutes,
       formattedSeconds,
       formattedCentis,
       isRunning,
-      isPaused,
-      recentlyReset,
       selectableRef,
       toggle,
       reset,
