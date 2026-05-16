@@ -9,7 +9,7 @@
 ## 🟢 Live Demo
 
 Access the application:  
-[stopwatch2077.net](https://stopwatch2077.net/)
+[faleonfall.github.io/Stopwatch-2077](https://faleonfall.github.io/Stopwatch-2077/)
 
 ---
 
@@ -38,7 +38,7 @@ Access the application:
 
 ## 📲 Usage
 
-- **Online Access:** [Stopwatch 2077](https://stopwatch2077.net/)
+- **Online Access:** [Stopwatch 2077](https://faleonfall.github.io/Stopwatch-2077/)
 - **Installation:** Use “Add to Home Screen” for an app-like experience
 - **Keyboard Shortcuts:**
   - `Spacebar` — Start / Stop
