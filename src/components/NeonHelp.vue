@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- Desktop (>=1200px): Show floating ? help -->
+    <!-- Mouse/trackpad device: Show floating ? help -->
     <div v-if="isDesktop" class="help-container">
       <button
         class="neon-help-btn select-none"
@@ -27,15 +27,15 @@
         <ul class="help-list">
           <li>
             <span class="help-key">Start/Stop:</span>
-            <span class="help-shortcut">Space</span>
+            <span class="help-shortcut"> Space</span>
           </li>
           <li>
             <span class="help-key">Reset:</span>
-            <span class="help-shortcut">R</span>
+            <span class="help-shortcut"> R</span>
           </li>
           <li>
             <span class="help-key">Copy:</span>
-            <span class="help-shortcut">C</span>
+            <span class="help-shortcut"> C</span>
           </li>
         </ul>
         <a
@@ -48,7 +48,7 @@
         >
       </div>
     </div>
-    <!-- Mobile/tablet (<1200px): Show GitHub link centered -->
+    <!-- Touch device: Show GitHub link centered -->
     <div v-else class="mobile-help-link">
       <a
         href="https://github.com/Faleonfall/Stopwatch-2077"
@@ -65,19 +65,19 @@
 import { ref, watch, nextTick, onMounted, onUnmounted } from "vue";
 import { gsap } from "gsap";
 
-// --- Responsive detection ---
-const isDesktop = ref(window.innerWidth >= 1200);
+// --- Pointer detection (fine = mouse/trackpad, coarse = touch) ---
+const pointerQuery = window.matchMedia("(pointer: fine)");
+const isDesktop = ref(pointerQuery.matches);
 
-function checkScreen() {
-  isDesktop.value = window.innerWidth >= 1200;
+function onPointerChange(e: MediaQueryListEvent) {
+  isDesktop.value = e.matches;
 }
 
 onMounted(() => {
-  window.addEventListener("resize", checkScreen);
-  checkScreen();
+  pointerQuery.addEventListener("change", onPointerChange);
 });
 onUnmounted(() => {
-  window.removeEventListener("resize", checkScreen);
+  pointerQuery.removeEventListener("change", onPointerChange);
 });
 
 // --- Popup logic ---
