@@ -6,5 +6,6 @@ export default defineConfig({
   plugins: [vue(), tailwindcss()],
   test: {
     environment: "jsdom",
+    setupFiles: ["./tests/setup.ts"],
   },
 });
