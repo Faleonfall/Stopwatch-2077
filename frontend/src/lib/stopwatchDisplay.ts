@@ -41,3 +41,27 @@ export function digitKey(
 export function centisecondsKey(value: string, justReset: boolean) {
   return `${value}-${justReset ? "reset" : "idle"}`;
 }
+
+export interface DigitFades {
+  minutes: boolean;
+  seconds: boolean;
+  centiseconds: boolean;
+}
+
+// A reset mid-run snaps every digit to zero. Otherwise minutes and seconds
+// fade, and centiseconds fade only while paused since they tick too fast.
+export function digitFades(isRunning: boolean, justReset: boolean): DigitFades {
+  const snaps = isRunning && justReset;
+
+  return {
+    minutes: !snaps,
+    seconds: !snaps,
+    centiseconds: !isRunning,
+  };
+}
+
+// A reset mid-run remounts the digits, so one still fading out is dropped at
+// once instead of holding back the zeros.
+export function displayKey(isRunning: boolean, justReset: boolean) {
+  return isRunning && justReset ? "snap" : "live";
+}

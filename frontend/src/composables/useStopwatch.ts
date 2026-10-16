@@ -1,7 +1,9 @@
 import { computed, nextTick, onBeforeUnmount, ref } from "vue";
 import {
   centisecondsKey as centisecondsKeyFor,
+  digitFades,
   digitKey,
+  displayKey as displayKeyFor,
   formatStopwatchCopyTime,
   formatStopwatchDisplayTime,
 } from "../lib/stopwatchDisplay";
@@ -28,6 +30,10 @@ export function useStopwatch() {
   );
   const centisecondsKey = computed(() =>
     centisecondsKeyFor(formattedCentiseconds.value, justReset.value),
+  );
+  const fades = computed(() => digitFades(isRunning.value, justReset.value));
+  const displayKey = computed(() =>
+    displayKeyFor(isRunning.value, justReset.value),
   );
 
   function clearIntervalIfNeeded() {
@@ -95,6 +101,8 @@ export function useStopwatch() {
 
   return {
     centisecondsKey,
+    displayKey,
+    fades,
     formattedMinutes,
     formattedSeconds,
     formattedCentiseconds,

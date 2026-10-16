@@ -1,7 +1,9 @@
 import { describe, expect, it } from "vitest";
 import {
   centisecondsKey,
+  digitFades,
   digitKey,
+  displayKey,
   formatStopwatchCopyTime,
   formatStopwatchDisplayTime,
   toggleLabel,
@@ -70,5 +72,39 @@ describe("centisecondsKey", () => {
   it("tells a reset apart from an idle value", () => {
     expect(centisecondsKey("42", true)).toBe("42-reset");
     expect(centisecondsKey("42", false)).toBe("42-idle");
+  });
+});
+
+describe("digitFades", () => {
+  it("snaps every digit on a reset mid-run", () => {
+    expect(digitFades(true, true)).toEqual({
+      minutes: false,
+      seconds: false,
+      centiseconds: false,
+    });
+  });
+
+  it("fades minutes and seconds but not centiseconds while running", () => {
+    expect(digitFades(true, false)).toEqual({
+      minutes: true,
+      seconds: true,
+      centiseconds: false,
+    });
+  });
+
+  it("fades every digit while paused, reset or not", () => {
+    const allFade = { minutes: true, seconds: true, centiseconds: true };
+
+    expect(digitFades(false, true)).toEqual(allFade);
+    expect(digitFades(false, false)).toEqual(allFade);
+  });
+});
+
+describe("displayKey", () => {
+  it("swaps the display only on a reset mid-run", () => {
+    expect(displayKey(true, true)).toBe("snap");
+    expect(displayKey(true, false)).toBe("live");
+    expect(displayKey(false, true)).toBe("live");
+    expect(displayKey(false, false)).toBe("live");
   });
 });
