@@ -1,0 +1,77 @@
+@layer components {
+  .stopwatch-time {
+    font-size: 8rem;
+    line-height: 1;
+    padding-bottom: 0.75rem;
+    cursor: pointer;
+    text-shadow:
+      0 0 2px rgba(var(--color-neon-cyan-rgb), 0.8),
+      0 0 6px rgba(var(--color-neon-cyan-rgb), 0.6),
+      0 0 16px rgba(var(--color-neon-cyan-rgb), 0.3);
+  }
+
+  .stopwatch-colon {
+    width: 0.6ch;
+    text-shadow:
+      0 0 2px rgba(var(--color-neon-yellow-rgb), 0.8),
+      0 0 6px rgba(var(--color-neon-yellow-rgb), 0.6),
+      0 0 16px rgba(var(--color-neon-yellow-rgb), 0.3);
+  }
+
+  .stopwatch-time ::selection {
+    background: transparent;
+    color: var(--color-neon-green);
+    text-shadow:
+      0 0 4px rgba(var(--color-neon-green-rgb), 0.8),
+      0 0 8px rgba(var(--color-neon-green-rgb), 0.6),
+      0 0 22px rgba(var(--color-neon-green-rgb), 0.3);
+  }
+
+  .stopwatch-controls {
+    display: flex;
+    gap: 3rem;
+  }
+
+  .digit-fade-enter-active,
+  .digit-fade-leave-active {
+    transition: opacity 0.15s ease-in-out;
+  }
+
+  .digit-fade-enter-from,
+  .digit-fade-leave-to {
+    opacity: 0;
+  }
+
+  @media (max-width: 768px) {
+    .stopwatch-panel {
+      padding-inline: 0.5rem;
+    }
+
+    .stopwatch-time {
+      font-size: 5.3rem;
+      padding-bottom: 1.5rem;
+    }
+
+    .stopwatch-colon {
+      width: 0.35ch;
+    }
+
+    .stopwatch-controls {
+      gap: 5rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .stopwatch-time {
+      font-size: 4.2rem;
+    }
+
+    .stopwatch-colon {
+      width: 0.3ch;
+    }
+
+    .stopwatch-controls {
+      gap: 4.5rem;
+    }
+  }
+}

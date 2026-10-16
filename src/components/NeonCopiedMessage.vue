@@ -2,7 +2,6 @@
   <div
     ref="neon"
     class="neon-message fixed top-6 left-1/2 -translate-x-1/2 z-50 select-none pointer-events-none"
-    style="pointer-events: none"
   >
     <span class="neon-text"> Copied </span>
   </div>
@@ -95,21 +94,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Monoton&display=swap");
-
-.neon-text {
-  font-family: "Monoton", cursive;
-  font-size: 2.7rem;
-  letter-spacing: 0.05em;
-  color: var(--color-neon-yellow);
-  text-shadow:
-    0 0 12px var(--color-neon-yellow),
-    0 0 20px var(--color-neon-yellow);
-}
-
-.neon-message {
-  opacity: 0;
-}
-</style>

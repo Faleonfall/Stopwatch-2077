@@ -1,13 +1,15 @@
 <template>
-  <div class="min-h-screen flex flex-col justify-center items-center space-y-3">
-    <NeonCopiedMessage :trigger="copyTrigger" color="#ffe600" />
+  <div
+    class="stopwatch-panel min-h-screen flex flex-col justify-center items-center space-y-3"
+  >
+    <NeonCopiedMessage :trigger="copyTrigger" />
     <SelectableText
       ref="selectableRef"
       :selectable="!isRunning"
       :clear-on-change="true"
     >
       <div
-        class="flex text-9xl font-cyber tabular-nums timer-select pb-3"
+        class="stopwatch-time flex font-cyber tabular-nums"
         @click="copyTime"
       >
         <!-- Reset mid-run: everything updates instantly -->
@@ -15,11 +17,11 @@
           <span class="text-neon-cyan w-[2ch] text-center">
             {{ formattedMinutes }}
           </span>
-          <span class="text-neon-yellow w-[0.6ch] text-center">:</span>
+          <span class="stopwatch-colon text-neon-yellow text-center">:</span>
           <span class="text-neon-cyan w-[2ch] text-center">
             {{ formattedSeconds }}
           </span>
-          <span class="text-neon-yellow w-[0.6ch] text-center">:</span>
+          <span class="stopwatch-colon text-neon-yellow text-center">:</span>
           <span class="text-neon-cyan w-[2ch] text-center">
             {{ formattedCentis }}
           </span>
@@ -36,7 +38,8 @@
               {{ formattedMinutes }}
             </span>
           </transition>
-          <span class="text-neon-yellow w-[0.6ch] text-center inline-block"
+          <span
+            class="stopwatch-colon text-neon-yellow text-center inline-block"
             >:</span
           >
 
@@ -49,7 +52,8 @@
               {{ formattedSeconds }}
             </span>
           </transition>
-          <span class="text-neon-yellow w-[0.6ch] text-center inline-block"
+          <span
+            class="stopwatch-colon text-neon-yellow text-center inline-block"
             >:</span
           >
 
@@ -79,7 +83,7 @@
     </SelectableText>
 
     <!-- Controls -->
-    <div class="flex space-x-12">
+    <div class="stopwatch-controls">
       <button class="cyber-btn select-none" @click="toggle">
         {{ isRunning ? "Stop" : "Start" }}
       </button>
@@ -154,64 +158,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style scoped>
-.text-9xl {
-  font-size: 8rem !important;
-  cursor: pointer;
-  text-shadow:
-    0 0 2px rgba(var(--color-neon-cyan-rgb), 0.8),
-    0 0 6px rgba(var(--color-neon-cyan-rgb), 0.6),
-    0 0 16px rgba(var(--color-neon-cyan-rgb), 0.3);
-}
-
-.timer-select .text-neon-yellow {
-  text-shadow:
-    0 0 2px rgba(var(--color-neon-yellow-rgb), 0.8),
-    0 0 6px rgba(var(--color-neon-yellow-rgb), 0.6),
-    0 0 16px rgba(var(--color-neon-yellow-rgb), 0.3);
-}
-
-@media (max-width: 768px) {
-  .text-9xl {
-    font-size: 5.3rem !important;
-  }
-
-  .timer-select .text-neon-yellow {
-    width: 0.35ch !important;
-    display: inline-block; /* Ensures width is respected */
-    padding-left: 0;
-    padding-right: 0;
-  }
-
-  .timer-select.pb-3 {
-    padding-bottom: 1.5rem;
-  }
-
-  .flex.space-x-12 {
-    gap: 2rem !important;
-  }
-
-  .min-h-screen {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .text-9xl {
-    font-size: 4.2rem !important;
-  }
-
-  .timer-select .text-neon-yellow {
-    width: 0.3ch !important;
-    display: inline-block; /* Ensures width is respected */
-    padding-left: 0;
-    padding-right: 0;
-  }
-
-  .flex.space-x-12 {
-    gap: 1.5rem !important;
-  }
-}
-</style>
