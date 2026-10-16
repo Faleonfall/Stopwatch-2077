@@ -1,32 +1,22 @@
-import { onMounted, onBeforeUnmount } from "vue";
+import { onBeforeUnmount, onMounted } from "vue";
+import {
+  isTypingTarget,
+  shortcutFor,
+  type ShortcutAction,
+} from "../lib/keyboardShortcuts";
 
 export function useKeyboardShortcuts(
-  toggle: () => void,
-  reset: () => void,
-  copyTime?: () => void,
+  actions: Record<ShortcutAction, () => void>,
 ) {
-  function handleKeyDown(e: KeyboardEvent) {
-    if (e.repeat) return; // prevent spamming when holding a key
+  function handleKeyDown(event: KeyboardEvent) {
+    if (isTypingTarget(event.target as HTMLElement | null)) return;
 
-    const target = e.target as HTMLElement;
-    const tag = target.tagName;
-    if (tag === "INPUT" || tag === "TEXTAREA" || target.isContentEditable)
-      return;
+    const action = shortcutFor(event);
+    if (!action) return;
 
-    if (e.code === "Space" || e.key === " ") {
-      e.preventDefault();
-      toggle();
-      return;
-    }
-
-    if (e.key === "r" || e.key === "R") {
-      reset();
-      return;
-    }
-
-    if ((e.key === "c" || e.key === "C") && typeof copyTime === "function") {
-      copyTime();
-    }
+    // Space would also scroll the page or press a focused button.
+    if (action === "toggle") event.preventDefault();
+    actions[action]();
   }
 
   onMounted(() => {

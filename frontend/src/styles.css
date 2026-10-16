@@ -6,19 +6,12 @@
 
 @theme {
   --color-cyber-background: #0d0d16;
-  --color-cyber-background-rgb: 13, 13, 22;
+  --color-cyber-panel: #12121b;
   --color-cyber-surface: #22223a;
-  --color-cyber-panel-rgb: 18, 18, 27;
   --color-neon-cyan: #00f0ff;
-  --color-neon-cyan-rgb: 0, 240, 255;
   --color-neon-green: #00ff2a;
-  --color-neon-green-rgb: 0, 255, 42;
   --color-neon-pink: #ff007f;
-  --color-neon-pink-rgb: 255, 0, 127;
   --color-neon-yellow: #ffea00;
-  --color-neon-yellow-rgb: 255, 234, 0;
-  --color-text-primary: #ffffff;
-  --color-text-primary-rgb: 255, 255, 255;
   --font-cyber: "Orbitron", sans-serif;
   --font-neon: "Monoton", cursive;
 }

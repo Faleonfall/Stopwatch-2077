@@ -1,8 +1,11 @@
 import { computed, nextTick, onBeforeUnmount, ref } from "vue";
 import {
+  centisecondsKey as centisecondsKeyFor,
+  digitKey,
   formatStopwatchCopyTime,
   formatStopwatchDisplayTime,
-} from "../utils/formatStopwatchTime";
+} from "../lib/stopwatchDisplay";
+import { RESET_FADE_MS, TICK_MS } from "../lib/stopwatchTimings";
 
 export function useStopwatch() {
   const elapsed = ref(0);
@@ -15,23 +18,17 @@ export function useStopwatch() {
   const displayTime = computed(() => formatStopwatchDisplayTime(elapsed.value));
   const formattedMinutes = computed(() => displayTime.value.minutes);
   const formattedSeconds = computed(() => displayTime.value.seconds);
-  const formattedCentis = computed(() => displayTime.value.centiseconds);
+  const formattedCentiseconds = computed(() => displayTime.value.centiseconds);
 
-  const minutesKey = computed(() => {
-    if (justReset.value && !isRunning.value) {
-      return `${formattedMinutes.value}-reset`;
-    }
-
-    return formattedMinutes.value;
-  });
-
-  const secondsKey = computed(() => {
-    if (justReset.value && !isRunning.value) {
-      return `${formattedSeconds.value}-reset`;
-    }
-
-    return formattedSeconds.value;
-  });
+  const minutesKey = computed(() =>
+    digitKey(formattedMinutes.value, justReset.value, isRunning.value),
+  );
+  const secondsKey = computed(() =>
+    digitKey(formattedSeconds.value, justReset.value, isRunning.value),
+  );
+  const centisecondsKey = computed(() =>
+    centisecondsKeyFor(formattedCentiseconds.value, justReset.value),
+  );
 
   function clearIntervalIfNeeded() {
     if (intervalId) {
@@ -45,7 +42,7 @@ export function useStopwatch() {
     startTime = Date.now() - elapsed.value;
     intervalId = setInterval(() => {
       elapsed.value = Date.now() - startTime;
-    }, 10);
+    }, TICK_MS);
   }
 
   function getCurrentElapsed() {
@@ -88,7 +85,7 @@ export function useStopwatch() {
     void nextTick().then(() => {
       setTimeout(() => {
         justReset.value = false;
-      }, 120);
+      }, RESET_FADE_MS);
     });
   }
 
@@ -97,9 +94,10 @@ export function useStopwatch() {
   });
 
   return {
+    centisecondsKey,
     formattedMinutes,
     formattedSeconds,
-    formattedCentis,
+    formattedCentiseconds,
     getCopyTime,
     isRunning,
     justReset,

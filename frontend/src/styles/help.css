@@ -19,9 +19,7 @@
     font-family: var(--font-cyber);
     font-size: 1.5rem;
     font-weight: 700;
-    box-shadow:
-      0 0 8px var(--color-neon-pink),
-      0 0 0 #000;
+    box-shadow: 0 0 8px var(--color-neon-pink);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -56,14 +54,14 @@
     letter-spacing: 0.015em;
     line-height: 1.48;
     color: var(--color-neon-yellow);
-    background: rgba(var(--color-cyber-panel-rgb), 0.97);
+    background: color-mix(in srgb, var(--color-cyber-panel) 97%, transparent);
     border: 2px solid var(--color-neon-pink);
     border-radius: 1.2rem;
     min-width: 220px;
     padding: 1.1rem 1.35rem;
     box-shadow:
       0 0 14px var(--color-neon-pink),
-      0 0 10px rgba(var(--color-neon-cyan-rgb), 0.13);
+      0 0 10px color-mix(in srgb, var(--color-neon-cyan) 13%, transparent);
     z-index: 100;
   }
 

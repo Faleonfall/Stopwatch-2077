@@ -3,11 +3,7 @@
     class="stopwatch-panel min-h-screen flex flex-col justify-center items-center space-y-3"
   >
     <NeonCopiedMessage :trigger="copyTrigger" />
-    <SelectableText
-      ref="selectableRef"
-      :selectable="!isRunning"
-      :clear-on-change="true"
-    >
+    <SelectableText :selectable="!isRunning">
       <div
         class="stopwatch-time flex font-cyber tabular-nums"
         @click="copyTime"
@@ -23,11 +19,11 @@
           </span>
           <span class="stopwatch-colon text-neon-yellow text-center">:</span>
           <span class="text-neon-cyan w-[2ch] text-center">
-            {{ formattedCentis }}
+            {{ formattedCentiseconds }}
           </span>
         </template>
 
-        <!-- Otherwise: per‐digit fade for minutes & seconds, and (when paused) for centis -->
+        <!-- Otherwise: per‐digit fade for minutes & seconds, and (when paused) for centiseconds -->
         <template v-else>
           <!-- Minutes -->
           <transition name="digit-fade" mode="out-in">
@@ -61,20 +57,20 @@
           <template v-if="isRunning">
             <!-- running (not reset): always instant -->
             <span
-              :key="formattedCentis"
+              :key="formattedCentiseconds"
               class="text-neon-cyan w-[2ch] text-center inline-block"
             >
-              {{ formattedCentis }}
+              {{ formattedCentiseconds }}
             </span>
           </template>
           <template v-else>
             <!-- paused/reset: fade -->
             <transition name="digit-fade" mode="out-in">
               <span
-                :key="formattedCentis + '-' + (justReset ? 'reset' : 'idle')"
+                :key="centisecondsKey"
                 class="text-neon-cyan w-[2ch] text-center inline-block"
               >
-                {{ formattedCentis }}
+                {{ formattedCentiseconds }}
               </span>
             </transition>
           </template>
@@ -85,7 +81,7 @@
     <!-- Controls -->
     <div class="stopwatch-controls">
       <button class="cyber-btn select-none" @click="toggle">
-        {{ isRunning ? "Stop" : "Start" }}
+        {{ toggleLabel(isRunning) }}
       </button>
       <button class="cyber-btn select-none" @click="reset">Reset</button>
     </div>
@@ -93,68 +89,25 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from "vue";
-import SelectableText from "./SelectableText.vue";
+<script setup lang="ts">
 import NeonCopiedMessage from "./NeonCopiedMessage.vue";
 import NeonHelp from "./NeonHelp.vue";
-import { useKeyboardShortcuts } from "../composables/useKeyboardShortcuts";
-import { useCopyToClipboard } from "../composables/useCopyToClipboard";
-import { useStopwatch } from "../composables/useStopwatch";
+import SelectableText from "./SelectableText.vue";
+import { useStopwatchControls } from "../composables/useStopwatchControls";
+import { toggleLabel } from "../lib/stopwatchDisplay";
 
-export default defineComponent({
-  name: "StopwatchPanel",
-  components: { NeonHelp, SelectableText, NeonCopiedMessage },
-  setup() {
-    const selectableRef = ref<InstanceType<typeof SelectableText> | null>(null);
-    const {
-      formattedMinutes,
-      formattedSeconds,
-      formattedCentis,
-      getCopyTime,
-      isRunning,
-      justReset,
-      minutesKey,
-      reset: resetStopwatch,
-      secondsKey,
-      toggle: toggleStopwatch,
-    } = useStopwatch();
-    const { copy, copyTrigger } = useCopyToClipboard();
-    const copyCooldown = ref(false);
-
-    function copyTime() {
-      if (copyCooldown.value) return; // prevent spamming
-      void copy(getCopyTime());
-      copyCooldown.value = true;
-      setTimeout(() => (copyCooldown.value = false), 1000);
-    }
-
-    function toggle() {
-      toggleStopwatch();
-      selectableRef.value?.clearSelection();
-    }
-
-    function reset() {
-      resetStopwatch();
-      selectableRef.value?.clearSelection();
-    }
-
-    useKeyboardShortcuts(toggle, reset, copyTime);
-
-    return {
-      formattedMinutes,
-      formattedSeconds,
-      formattedCentis,
-      isRunning,
-      selectableRef,
-      toggle,
-      reset,
-      justReset,
-      minutesKey,
-      secondsKey,
-      copyTrigger,
-      copyTime,
-    };
-  },
-});
+const {
+  centisecondsKey,
+  copyTime,
+  copyTrigger,
+  formattedCentiseconds,
+  formattedMinutes,
+  formattedSeconds,
+  isRunning,
+  justReset,
+  minutesKey,
+  reset,
+  secondsKey,
+  toggle,
+} = useStopwatchControls();
 </script>
