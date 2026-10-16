@@ -1,5 +1,5 @@
 <template>
-  <transition name="digit-fade" :css="fade" :mode="fade ? 'out-in' : 'default'">
+  <transition name="digit-fade" :css="fade" :mode="digitTransitionMode(fade)">
     <span
       :key="transitionKey"
       class="text-neon-cyan w-[2ch] text-center inline-block"
@@ -10,6 +10,8 @@
 </template>
 
 <script setup lang="ts">
+import { digitTransitionMode } from "../lib/stopwatchDisplay";
+
 defineProps<{
   value: string;
   transitionKey: string;

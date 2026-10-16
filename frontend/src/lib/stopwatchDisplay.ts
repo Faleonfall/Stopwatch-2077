@@ -60,6 +60,12 @@ export function digitFades(isRunning: boolean, justReset: boolean): DigitFades {
   };
 }
 
+// A fading digit waits for the old one to leave. A snapping digit swaps at
+// once, since out-in would re-render it on every tick.
+export function digitTransitionMode(fade: boolean) {
+  return fade ? "out-in" : "default";
+}
+
 // A reset mid-run remounts the digits, so one still fading out is dropped at
 // once instead of holding back the zeros.
 export function displayKey(isRunning: boolean, justReset: boolean) {

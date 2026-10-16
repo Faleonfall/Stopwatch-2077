@@ -3,6 +3,7 @@ import {
   centisecondsKey,
   digitFades,
   digitKey,
+  digitTransitionMode,
   displayKey,
   formatStopwatchCopyTime,
   formatStopwatchDisplayTime,
@@ -97,6 +98,13 @@ describe("digitFades", () => {
 
     expect(digitFades(false, true)).toEqual(allFade);
     expect(digitFades(false, false)).toEqual(allFade);
+  });
+});
+
+describe("digitTransitionMode", () => {
+  it("waits for the old digit only when fading", () => {
+    expect(digitTransitionMode(true)).toBe("out-in");
+    expect(digitTransitionMode(false)).toBe("default");
   });
 });
 
