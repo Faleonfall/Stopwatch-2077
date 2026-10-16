@@ -74,7 +74,7 @@ export function useStopwatch() {
       elapsed.value = 0;
       startInterval();
 
-      nextTick(() => {
+      void nextTick(() => {
         justReset.value = false;
       });
 
@@ -85,7 +85,7 @@ export function useStopwatch() {
     elapsed.value = 0;
     justReset.value = true;
 
-    nextTick().then(() => {
+    void nextTick().then(() => {
       setTimeout(() => {
         justReset.value = false;
       }, 120);

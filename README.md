@@ -54,5 +54,6 @@ Access the application:
 git clone https://github.com/faleonfall/Stopwatch-2077.git
 cd Stopwatch-2077
 npm install
+git config core.hooksPath .githooks
 npm run dev
 ```

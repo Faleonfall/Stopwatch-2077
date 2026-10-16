@@ -1,0 +1,10 @@
+node_modules/
+dist/
+dist-ssr/
+coverage/
+.vite/
+*.tsbuildinfo
+*.log
+.env
+.env.*
+package-lock.json

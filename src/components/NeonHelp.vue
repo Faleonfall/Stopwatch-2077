@@ -3,21 +3,21 @@
     <!-- Mouse/trackpad device: Show floating ? help -->
     <div v-if="isDesktop" class="help-container">
       <button
-        class="neon-help-btn select-none"
         ref="helpBtn"
+        class="neon-help-btn select-none"
+        aria-label="Show keyboard shortcuts and info"
         @mouseenter="showPopup"
         @mouseleave="queueHidePopup"
         @focus="showPopup"
         @blur="queueHidePopup"
         @keydown.esc="hidePopup"
-        aria-label="Show keyboard shortcuts and info"
       >
         ?
       </button>
       <div
         v-if="isRendered"
-        class="neon-help-popup select-none"
         ref="popup"
+        class="neon-help-popup select-none"
         tabindex="-1"
         @mouseenter="showPopup"
         @mouseleave="queueHidePopup"

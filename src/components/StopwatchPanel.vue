@@ -1,10 +1,10 @@
 <template>
   <div class="min-h-screen flex flex-col justify-center items-center space-y-3">
     <NeonCopiedMessage :trigger="copyTrigger" color="#ffe600" />
-    <Selectable
+    <SelectableText
       ref="selectableRef"
       :selectable="!isRunning"
-      :clearOnChange="true"
+      :clear-on-change="true"
     >
       <div
         class="flex text-9xl font-cyber tabular-nums timer-select pb-3"
@@ -30,8 +30,8 @@
           <!-- Minutes -->
           <transition name="digit-fade" mode="out-in">
             <span
-              class="text-neon-cyan w-[2ch] text-center inline-block"
               :key="minutesKey"
+              class="text-neon-cyan w-[2ch] text-center inline-block"
             >
               {{ formattedMinutes }}
             </span>
@@ -43,8 +43,8 @@
           <!-- Seconds -->
           <transition name="digit-fade" mode="out-in">
             <span
-              class="text-neon-cyan w-[2ch] text-center inline-block"
               :key="secondsKey"
+              class="text-neon-cyan w-[2ch] text-center inline-block"
             >
               {{ formattedSeconds }}
             </span>
@@ -57,8 +57,8 @@
           <template v-if="isRunning">
             <!-- running (not reset): always instant -->
             <span
-              class="text-neon-cyan w-[2ch] text-center inline-block"
               :key="formattedCentis"
+              class="text-neon-cyan w-[2ch] text-center inline-block"
             >
               {{ formattedCentis }}
             </span>
@@ -67,8 +67,8 @@
             <!-- paused/reset: fade -->
             <transition name="digit-fade" mode="out-in">
               <span
-                class="text-neon-cyan w-[2ch] text-center inline-block"
                 :key="formattedCentis + '-' + (justReset ? 'reset' : 'idle')"
+                class="text-neon-cyan w-[2ch] text-center inline-block"
               >
                 {{ formattedCentis }}
               </span>
@@ -76,7 +76,7 @@
           </template>
         </template>
       </div>
-    </Selectable>
+    </SelectableText>
 
     <!-- Controls -->
     <div class="flex space-x-12">
@@ -91,7 +91,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
-import Selectable from "./Selectable.vue";
+import SelectableText from "./SelectableText.vue";
 import NeonCopiedMessage from "./NeonCopiedMessage.vue";
 import NeonHelp from "./NeonHelp.vue";
 import { useKeyboardShortcuts } from "../composables/useKeyboardShortcuts";
@@ -99,10 +99,10 @@ import { useCopyToClipboard } from "../composables/useCopyToClipboard";
 import { useStopwatch } from "../composables/useStopwatch";
 
 export default defineComponent({
-  name: "Stopwatch",
-  components: { NeonHelp, Selectable, NeonCopiedMessage },
+  name: "StopwatchPanel",
+  components: { NeonHelp, SelectableText, NeonCopiedMessage },
   setup() {
-    const selectableRef = ref<InstanceType<typeof Selectable> | null>(null);
+    const selectableRef = ref<InstanceType<typeof SelectableText> | null>(null);
     const {
       formattedMinutes,
       formattedSeconds,
@@ -120,7 +120,7 @@ export default defineComponent({
 
     function copyTime() {
       if (copyCooldown.value) return; // prevent spamming
-      copy(getCopyTime());
+      void copy(getCopyTime());
       copyCooldown.value = true;
       setTimeout(() => (copyCooldown.value = false), 1000);
     }

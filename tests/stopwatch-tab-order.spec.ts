@@ -1,6 +1,6 @@
 import { mount } from "@vue/test-utils";
 import { describe, expect, it, vi, beforeEach, afterEach } from "vitest";
-import Stopwatch from "../src/components/Stopwatch.vue";
+import StopwatchPanel from "../src/components/StopwatchPanel.vue";
 
 describe("stopwatch tab order", () => {
   const originalInnerWidth = window.innerWidth;
@@ -23,7 +23,7 @@ describe("stopwatch tab order", () => {
   });
 
   it("renders focusable desktop controls in Start, Reset, Help order", () => {
-    const wrapper = mount(Stopwatch);
+    const wrapper = mount(StopwatchPanel);
 
     const focusables = wrapper
       .findAll("button")
