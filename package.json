@@ -4,11 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "dev": "vite frontend",
+    "build": "vite build frontend",
     "format": "prettier --write .",
-    "check": "vue-tsc --noEmit && eslint .",
-    "test": "vitest run"
+    "check": "vue-tsc --noEmit -p frontend/tsconfig.json && eslint .",
+    "test": "vitest run --root frontend"
   },
   "dependencies": {
     "gsap": "^3.15.0",
@@ -16,16 +16,16 @@
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.2.4",
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/user-event": "^14.6.8",
+    "@testing-library/vue": "^8.1.0",
     "@typescript-eslint/eslint-plugin": "^8.71.2",
     "@typescript-eslint/parser": "^8.71.2",
     "@vitejs/plugin-vue": "^6.0.6",
-    "@vue/test-utils": "^2.4.8",
-    "autoprefixer": "^10.5.0",
     "eslint": "^10.12.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-vue": "^10.11.1",
     "jsdom": "^29.0.2",
-    "postcss": "^8.5.11",
     "prettier": "^3.9.10",
     "tailwindcss": "^4.2.4",
     "typescript": "^6.0.3",

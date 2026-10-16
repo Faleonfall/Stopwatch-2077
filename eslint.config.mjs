@@ -5,7 +5,7 @@ import vuePlugin from "eslint-plugin-vue";
 import vueParser from "vue-eslint-parser";
 
 // Every tsconfig in the repo, so typed rules see every file.
-const project = ["./tsconfig.json"];
+const project = ["./frontend/tsconfig.json"];
 
 const typeScriptRules = {
   // Type and value imports from one module must share a line, so a module
@@ -31,7 +31,7 @@ const typeScriptRules = {
 
 export default [
   {
-    ignores: ["node_modules/", "dist/", "coverage/"],
+    ignores: ["node_modules/", "frontend/dist/", "coverage/"],
   },
   ...vuePlugin.configs["flat/recommended"],
   {
